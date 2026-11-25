@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+body { @apply font-sans text-navy bg-white antialiased; overflow-x: hidden; }
+:focus-visible { outline: 3px solid #0F1B4C; outline-offset: 3px; }
+.dots { background-image: radial-gradient(#FFD42E 2.2px, transparent 2.4px); background-size: 22px 22px; }
+/* soften the photo's hard yellow edges so it blends into the blob */
+.photo-mask { -webkit-mask-image: linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%); mask-image: linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%); }
+@media (min-width: 1024px) {
+  .photo-mask { -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12%); mask-image: linear-gradient(to right, transparent 0, #000 12%); }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+@keyframes bird { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(18px, -10px); } }
+.bird { animation: bird 9s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .bird { animation: none; } }
+
