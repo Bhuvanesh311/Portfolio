@@ -4,6 +4,7 @@ import { profile, pages, about, skills, projects, upcomingProjects, education } 
 import { skillIcon, fallbackIcon, groupIcon, groupFallback } from './skillIcons.jsx'
 import { FaGithub, FaLinkedinIn, FaEnvelope, FaPhone, FaLocationDot, FaPaperPlane } from 'react-icons/fa6'
 
+
 /* ---------- tiny hash router: #/about shows only the About page ---------- */
 /* ---------- tiny hash router: #/projects/contextapi opens a project ---------- */
 const readRoute = () => {
@@ -82,19 +83,38 @@ function Header({ page }) {
 }
 
 /* ---------- shared page wrapper + "next page" link ---------- */
-function Page({ id, title, children,hideNext }) {
+function PageBackground() {
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      <div className="bg-blob left-[-8rem] top-24 h-72 w-72 bg-sun/40" />
+      <div className="bg-blob right-[-6rem] top-[28rem] h-80 w-80 bg-[#FFE98A]/60 [animation-delay:-6s]" />
+      <div className="bg-blob bottom-10 left-[20%] h-64 w-64 bg-[#C9D3FF]/40 [animation-delay:-12s]" />
+      <div className="dots absolute right-6 top-28 hidden h-40 w-40 opacity-40 sm:block" />
+      <div className="dots absolute bottom-24 left-4 hidden h-32 w-32 opacity-30 md:block" />
+      <span className="bg-float left-[8%] top-[22%] h-5 w-5 rounded-full border-4 border-sun" />
+      <span className="bg-float right-[12%] top-[40%] h-4 w-4 rotate-45 bg-sun/70 [animation-delay:-4s]" />
+      <span className="bg-float bottom-[18%] right-[22%] h-6 w-6 rounded-full border-4 border-navy/15 [animation-delay:-8s]" />
+      <span className="bg-float left-[45%] top-[12%] font-mono text-2xl font-extrabold text-navy/10 [animation-delay:-2s]">{'</>'}</span>
+    </div>
+  )
+}
+
+function Page({ id, title, children, hideNext }) {
   const i = pages.findIndex((p) => p.id === id)
   const next = pages[i + 1]
   return (
-    <div className="mx-auto w-full max-w-6xl px-5 pb-14 pt-28 md:pb-20 md:pt-36">
-      <h1 className="font-serif text-3xl font-extrabold sm:text-4xl md:text-5xl">{title}</h1>
-      <div className="mt-3 h-1.5 w-20 rounded-full bg-sun" />
-      <div className="mt-10 md:mt-12">{children}</div>
-      {next && !hideNext && (
-        <div className="mt-14 border-t border-navy/10 pt-6">
-          <a href={`#/${next.id}`} className={`font-bold ${linkCls}`}>Next: {next.label} →</a>
-        </div>
-      )}
+    <div className="relative overflow-hidden bg-gradient-to-b from-[#FFFBEA] via-white to-[#FFF6CC]">
+      <PageBackground />
+      <div className="relative mx-auto w-full max-w-6xl px-5 pb-14 pt-28 md:pb-20 md:pt-36">
+        <h1 className="font-serif text-3xl font-extrabold sm:text-4xl md:text-5xl">{title}</h1>
+        <div className="mt-3 h-1.5 w-20 rounded-full bg-sun" />
+        <div className="mt-10 md:mt-12">{children}</div>
+        {next && !hideNext && (
+          <div className="mt-14 border-t border-navy/10 pt-6">
+            <a href={`#/${next.id}`} className={`font-bold ${linkCls}`}>Next: {next.label} →</a>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
@@ -120,9 +140,9 @@ function Home() {
           </motion.h1>
           <motion.p {...rise(3)} className="mt-9 max-w-md text-base leading-relaxed text-slate2 sm:text-lg lg:text-xl">{profile.intro}</motion.p>
           <motion.div {...rise(4)} className="mt-8 flex flex-wrap gap-3 sm:gap-4">
-            <a href="#/projects" className={btnPrimary}><FolderIcon />View Projects<ArrowIcon /></a>
+            <a href="#/projects" className={btnPrimary}>View All Projects<ArrowIcon /></a>
             <a href={profile.linkedin} target="_blank" rel="noreferrer" className={btnOutline}><LinkedInIcon />LinkedIn</a>
-            {profile.resume && <a href={profile.resume} target="_blank" rel="noreferrer" className={btnOutline}>Resume</a>}
+            {profile.resume && <a href={profile.resume} download="Bhuvaneshwaran_D_Resume.pdf" className={btnOutline}>Resume</a>}
           </motion.div>
           <motion.p {...rise(5)} className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-sunsoft px-4 py-2 text-sm font-bold">
             <span className="h-2.5 w-2.5 rounded-full bg-green-500" aria-hidden="true" />{profile.openToWork}
@@ -173,7 +193,7 @@ const About = () => {
             {about.closing.map((p) => <p key={p}>{p}</p>)}
           </div>
           <div className="mt-8 flex flex-wrap gap-3 sm:gap-4">
-            {profile.resume && <a href={profile.resume} download className={btnPrimary}>Download Resume</a>}
+            {profile.resume && <a href={profile.resume} download="Bhuvaneshwaran_D_Resume.pdf" className={btnPrimary}>Download Resume</a>}
             <a href="#/projects" className={btnOutline}>See my projects</a>
             <a href="#/contact" className={btnOutline}>Contact me</a>
           </div>
